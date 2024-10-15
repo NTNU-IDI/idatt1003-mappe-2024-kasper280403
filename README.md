@@ -11,7 +11,7 @@ STUDENT ID = "Your ID"
 
 ## Project description
 
-[//]: # (TODO: Write a short description of your project/product here.)
+[//]: # (TODO: Write a short description of your project/product here.) oki
 
 ## Project structure
 
