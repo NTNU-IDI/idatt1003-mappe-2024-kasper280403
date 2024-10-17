@@ -29,6 +29,6 @@ public class Varer {
     public int enhetskalkulator(int m, String EnhetFra, String EnhetTil){
         List<String> volum = List.of("mL", "cL", "dL", "L", "daL", "hL", "kL");
         List<String> vekt = List.of("mg", "cg", "dg", "g", "dag", "hg", "kg");
-
+        a;
     }
 }
