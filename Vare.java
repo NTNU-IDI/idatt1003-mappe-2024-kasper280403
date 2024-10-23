@@ -26,6 +26,6 @@ public class Vare {
         return pris;
     }
     public String hentBestfor(){
-        return bestfor.eldste();
+        return bestfor.hentDato(bestfor.eldsteIndex());
     }
 }

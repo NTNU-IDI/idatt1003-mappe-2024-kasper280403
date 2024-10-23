@@ -17,10 +17,11 @@ public class UtlopsDato {
     }
 
 
-    public String eldste(){
-        String temp = this.dato.get(0).substring(4, 8);
+    public int eldsteIndex(){
+        
+        String temp = this.dato.get(0).substring(6, 10);
         int aar = Integer.parseInt(temp);
-        temp = this.dato.get(0).substring(2, 4);
+        temp = this.dato.get(0).substring(3, 5);
         int maaned = Integer.parseInt(temp);
         temp = this.dato.get(0).substring(0, 2);
         int dag = Integer.parseInt(temp);
@@ -28,9 +29,9 @@ public class UtlopsDato {
         int indexEldste = 0;
 
         for (int index = 1; index < dato.size(); index++) {
-            temp = this.dato.get(index).substring(4, 8);
+            temp = this.dato.get(index).substring(6, 10);
             int aarNeste = Integer.parseInt(temp);
-            temp = this.dato.get(index).substring(2, 4);
+            temp = this.dato.get(index).substring(3, 5);
             int maanedNeste = Integer.parseInt(temp);
             temp = this.dato.get(index).substring(0, 2);
             int dagNeste = Integer.parseInt(temp);
@@ -46,7 +47,12 @@ public class UtlopsDato {
                 }
             }
         }
-        return this.dato.get(indexEldste);
+
+        return indexEldste;
+    }
+
+    public String hentDato(int Index){
+        return this.dato.get(Index);
     }
 }
 

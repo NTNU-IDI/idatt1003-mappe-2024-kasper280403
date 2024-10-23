@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 
 
 public class Lager {
@@ -79,14 +80,37 @@ public class Lager {
     }
 
 
-    //Brukes til å skape utlopsdato
+    //Brukes til å skape utlopsdatoer
     public void oppdaterBestfor(String navn, Double mengde, String dato){
         
     }
 
-    
 
     public Vare hentVare(String key) {
         return lager.get(key.toLowerCase());
+    }
+
+    public ArrayList<String> vareTabell(String key){
+        ArrayList<String> v = new ArrayList<>();
+
+        Vare vare = lager.get(key.toLowerCase());
+        v.add(vare.hentNavn());
+        v.add(String.valueOf(vare.hentMengde()));
+        v.add(vare.hentEnhet());
+        v.add(String.valueOf(vare.hentPris()));
+        v.add(vare.hentBestfor());
+
+
+        return v;
+    }
+
+    public ArrayList<ArrayList<String>> vareOversikt(){
+        ArrayList<ArrayList<String>> tabell = new ArrayList<>();
+        //int i = 0;
+        for(String key : lager.keySet()){
+            tabell.add(vareTabell(key));
+        }
+
+        return tabell;
     }
 }
