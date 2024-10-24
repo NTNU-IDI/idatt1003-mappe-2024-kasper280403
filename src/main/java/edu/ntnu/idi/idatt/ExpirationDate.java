@@ -18,6 +18,21 @@ public class ExpirationDate {
         this.date.add(expiration);
     }
 
+    public void remove(Double quantity){
+        Double remainingQuantity = quantity;
+        while(remainingQuantity > 0) {
+            int index = oldestIndex();
+            Double freeQuantity = this.quantity.get(index);
+            if (remainingQuantity < freeQuantity) {
+                this.quantity.set(index, freeQuantity - remainingQuantity);
+            } else {
+                this.quantity.remove(index);
+                this.date.remove(index);
+            }
+            remainingQuantity -= freeQuantity;
+        }
+    }
+
 
     public int oldestIndex(){
 
@@ -41,7 +56,7 @@ public class ExpirationDate {
             if(year >= yearNext){
                 if(month >= monthNext){
                     if(day >= dayNext){
-                        indexOldest = 1;
+                        indexOldest += 1;
                         year = yearNext;
                         month = monthNext;
                         day = dayNext;

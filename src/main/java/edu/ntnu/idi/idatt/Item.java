@@ -28,6 +28,10 @@ public class Item {
         return price;
     }
     public String getExpiration(){
-        return expiration.getDate(expiration.oldestIndex());
+        int index = expiration.oldestIndex();
+        if (index >= 0 && index < expiration.date.size()) {
+            return expiration.getDate(index);
+        }
+        return "No valid dates";
     }
 }

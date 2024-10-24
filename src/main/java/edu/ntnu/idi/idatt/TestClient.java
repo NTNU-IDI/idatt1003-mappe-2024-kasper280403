@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class TestClient {
     public static void main(String[] args) {
-        //This is test client
+
         Storage storage = new Storage();
 
-        storage.updateStorage("Milk", 10.0, "L", 21.90, "12-12-2024");
+        storage.updateStorage("Milk", 10.0, "L", 21.90, "08-12-2024");
 
         Item milk = storage.getItem("milk");
         System.out.println(milk.getName());
@@ -38,6 +38,26 @@ public class TestClient {
         System.out.println("\n");
 
         printTable();
+
+        searchItem("ham");
+
+        searchItem("milk");
+
+        System.out.println("\nTesting expiration\n\n");
+
+        searchItem("milk");
+
+        storage.updateStorage("ham", 10.0, "hg", 30.0, "10-08-2024");
+        storage.updateStorage("ham", 6.0, "hg", 30.0, "30-08-2024");
+
+        searchItem("ham");
+
+        storage.updateStorage("ham", -13.0, "hg", 30.0, "00-00-0000");
+
+        searchItem("ham");
+
+
+
     }
 
     public static void printTable(){
@@ -59,4 +79,31 @@ public class TestClient {
             );
         }
     }
+
+
+    public static void searchItem(String key) {
+        Storage storage = new Storage();
+        if (storage.itemExists(key)) {
+            Item itemList = storage.getItem(key);
+            System.out.println("Item found:");
+            System.out.printf("%-10s %-10s %-10s %-10s %-15s%n", "Item", "Quantity", "Unit", "Price", "Expiration");
+            System.out.println("--------------------------------------------------------------");
+
+            System.out.printf("%-10s %-10s %-10s %-10s %-15s%n",
+                    itemList.getName(), // Item
+                    itemList.getQuantity(), // quantity
+                    itemList.getUnit(), // unit
+                    itemList.getPrice(), // price
+                    itemList.getExpiration()  // expiration
+            );
+        } else {
+            System.out.println("Item not found");
+        }
+    }
+
+
+
+
+
+
 }

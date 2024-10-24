@@ -36,10 +36,13 @@ public class Storage {
                 existingItem.price = price;
             }
 
-            //Add to date thing
-            //existingItem.date =
-            existingItem.expiration.update(quantity, expiration);
 
+
+            if(quantity>0) {
+                existingItem.expiration.update(quantity, expiration);
+            } else {
+                existingItem.expiration.remove(quantity);
+            }
 
 
 
@@ -83,7 +86,6 @@ public class Storage {
 
 
 
-
     public Item getItem(String key) {
         return storage.get(key.toLowerCase());
     }
@@ -110,5 +112,9 @@ public class Storage {
         }
 
         return table;
+    }
+
+    public boolean itemExists(String key){
+        return storage.containsKey(key);
     }
 }
