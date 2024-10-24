@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TestClient {
     public static void main(String[] args) {
-
+        //This is test client
         Storage storage = new Storage();
 
         storage.updateStorage("Milk", 10.0, "L", 21.90, "12-12-2024");
