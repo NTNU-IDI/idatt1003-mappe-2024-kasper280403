@@ -29,7 +29,7 @@ public class Item {
     }
     public String getExpiration(){
         int index = expiration.oldestIndex();
-        if (index >= 0 && index < expiration.date.size()) {
+        if (index >= 0 && index < expiration.dates.size()) {
             return expiration.getDate(index);
         }
         return "No valid dates";

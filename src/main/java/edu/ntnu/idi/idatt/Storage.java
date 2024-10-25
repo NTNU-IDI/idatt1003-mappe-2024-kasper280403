@@ -25,23 +25,24 @@ public class Storage {
 
             // Converts quantity if necessary
             if (!existingItem.unit.equals(unit)) {
-                quantity = unitConverter(quantity, unit, existingItem.unit);
+                List<Double> convertedUnits = unitConverter(quantity, unit, existingItem.unit, price);
+                quantity = convertedUnits.getFirst();
+                price = convertedUnits.getLast();
+                //converts sum as well
             }
 
             // Updates quantity
             existingItem.quantity += quantity;
 
-            // Updates price if it's different and not 0
-            if (price != 0) {
-                existingItem.price = price;
-            }
-
-
-
             if(quantity>0) {
                 existingItem.expiration.update(quantity, expiration);
             } else {
                 existingItem.expiration.remove(quantity);
+            }
+
+            // Updates price if it's different and not 0
+            if (price != 0.0) {
+                existingItem.price = price;
             }
 
 
@@ -51,7 +52,8 @@ public class Storage {
     }
 
 
-    private Double unitConverter(Double quantity, String unitFrom, String unitTo) {
+    private List<Double> unitConverter(Double quantity, String unitFrom, String unitTo, Double price) {
+
         List<String> volume = List.of("mL", "cL", "dL", "L", "daL", "hL", "kL");
         List<String> weight = List.of("mg", "cg", "dg", "g", "dag", "hg", "kg");
 
@@ -67,12 +69,14 @@ public class Storage {
                 // Converts quantity
                 int f = indexFrom % 10; //gives the rest of (0-6 or 10-16) / 10, becomes 0-6, and you get original index of weight
                 int t = indexTo % 10;
-                return quantity * Math.pow(10, (f - t)); // calculates new quantity with old unit
+                Double q = quantity * Math.pow(10, (f - t)); // calculates new quantity with old unit
+                Double p = price * Math.pow(10, (t - f));
+                return List.of(q, p);
             }
         }
 
         // Returns -1 if unit is inconvertible
-        return -1.0;
+        return List.of(-1.0, -1.0);
     }
 
     private int findUnitIndex(String unit, List<String> volume, List<String> weight) {
@@ -104,9 +108,22 @@ public class Storage {
         return v;
     }
 
+    public ArrayList<String> itemListExpired(String key, Double amount){
+        ArrayList<String> v = new ArrayList<>();
+
+        Item item = storage.get(key.toLowerCase());
+        v.add(item.getName());
+        v.add(amount.toString());
+        v.add(item.getUnit());
+        v.add(String.valueOf(item.getPrice()));
+        v.add(item.getExpiration());
+
+
+        return v;
+    }
+
     public ArrayList<ArrayList<String>> storageList(){
         ArrayList<ArrayList<String>> table = new ArrayList<>();
-        //int i = 0;
         for(String key : storage.keySet()){
             table.add(itemList(key));
         }
@@ -117,4 +134,37 @@ public class Storage {
     public boolean itemExists(String key){
         return storage.containsKey(key);
     }
+
+    public double sumOfStorage(){
+        double sum = 0.0;
+        for(String key : storage.keySet()){
+            Item item = storage.get(key);
+            Double quantity = item.quantity;
+            Double price = item.price;
+            sum += quantity * price;
+        }
+        return sum;
+    }
+
+    public ArrayList<ArrayList<String>> expiredList(String currentDate){
+        ArrayList<Item> expiredItem = new ArrayList<>();
+        ArrayList<Double> quantity = new ArrayList<>();
+        ArrayList<ArrayList<String>> expired = new ArrayList<>();
+        for (String key : storage.keySet()) {
+            Item item = storage.get(key);
+            Double amount = item.expiration.amountExpired(currentDate);
+            if(amount>0) {
+                expiredItem.add(item);
+                quantity.add(amount);
+            }
+        }
+        int i = 0;
+        for(Item item : expiredItem){
+            expired.add(itemListExpired(item.getName(), quantity.get(i)));
+            i++;
+        }
+        return expired;
+    }
+
+    
 }

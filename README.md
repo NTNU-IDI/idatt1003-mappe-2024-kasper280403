@@ -6,7 +6,7 @@ This file uses Mark Down syntax. For more information see [here](https://www.mar
 
 [//]: # (TODO: Fill inn your name and student ID)
 
-STUDENT NAME = "Your name"  
+STUDENT NAME = "Kasper Stensrud Karlsen"  
 STUDENT ID = "Your ID"
 
 ## Project description
@@ -25,10 +25,15 @@ STUDENT ID = "Your ID"
 
 [//]: # (TODO: Describe how to run your project here. What is the main class? What is the main method?
 What is the input and output of the program? What is the expected behaviour of the program?)
+Currently the program only has a testClient this file runs the current functions of the program 
+and is used to test that everything works.
+A real user interface will be implemented when all the necessary functions hav been made,
+
 
 ## How to run the tests
 
 [//]: # (TODO: Describe how to run the tests here.)
+For now only thing to do is run the testClient
 
 ## References
 

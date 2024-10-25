@@ -2,55 +2,56 @@ package edu.ntnu.idi.idatt;
 
 import java.util.ArrayList;
 
+
 public class ExpirationDate {
     String name;
-    ArrayList<Double> quantity = new ArrayList<>();
-    ArrayList<String> date = new ArrayList<>();
+    ArrayList<Double> quantities = new ArrayList<>();
+    ArrayList<String> dates = new ArrayList<>();
+
 
     public ExpirationDate(String name, Double quantity, String expiration){
         this.name = name;
-        this.quantity.add(quantity);
-        this.date.add(expiration);
+        this.quantities.add(quantity);
+        this.dates.add(expiration);
     }
 
     public void update(Double quantity, String expiration){
-        this.quantity.add(quantity);
-        this.date.add(expiration);
+        this.quantities.add(quantity);
+        this.dates.add(expiration);
     }
 
     public void remove(Double quantity){
-        Double remainingQuantity = quantity;
-        while(remainingQuantity > 0) {
+        double remainingQuantity = -quantity;
+        while(remainingQuantity > 0.0) {
             int index = oldestIndex();
-            Double freeQuantity = this.quantity.get(index);
+            Double freeQuantity = this.quantities.get(index);
             if (remainingQuantity < freeQuantity) {
-                this.quantity.set(index, freeQuantity - remainingQuantity);
+                this.quantities.set(index, freeQuantity - remainingQuantity);
             } else {
-                this.quantity.remove(index);
-                this.date.remove(index);
+                this.quantities.remove(index);
+                this.dates.remove(index);
             }
             remainingQuantity -= freeQuantity;
         }
     }
 
-
     public int oldestIndex(){
 
-        String temp = this.date.getFirst().substring(6, 10);
+        String temp = this.dates.getFirst().substring(6, 10);
         int year = Integer.parseInt(temp);
-        temp = this.date.getFirst().substring(3, 5);
+        temp = this.dates.getFirst().substring(3, 5);
         int month = Integer.parseInt(temp);
-        temp = this.date.getFirst().substring(0, 2);
+        temp = this.dates.getFirst().substring(0, 2);
         int day = Integer.parseInt(temp);
 
         int indexOldest = 0;
 
-        for (int index = 1; index < date.size(); index++) {
-            temp = this.date.get(index).substring(6, 10);
+        for (int index = 1; index < dates.size(); index++) {
+            temp = this.dates.get(index).substring(6, 10);
             int yearNext = Integer.parseInt(temp);
-            temp = this.date.get(index).substring(3, 5);
+            temp = this.dates.get(index).substring(3, 5);
             int monthNext = Integer.parseInt(temp);
-            temp = this.date.get(index).substring(0, 2);
+            temp = this.dates.get(index).substring(0, 2);
             int dayNext = Integer.parseInt(temp);
 
             if(year >= yearNext){
@@ -68,7 +69,45 @@ public class ExpirationDate {
         return indexOldest;
     }
 
+
     public String getDate(int Index){
-        return this.date.get(Index);
+        return this.dates.get(Index);
+
     }
+
+    public Double amountExpired(String testDate){
+        Double expiredAmount = 0.0;
+        for(int i = 0; i < this.dates.size(); i++){
+            if(isPastDate(dates.get(i), testDate)){
+                expiredAmount += this.quantities.get(i);
+            }
+        }
+        System.out.println("Test 1 Amount expired: " + expiredAmount);
+        return expiredAmount;
+    }
+
+
+    //returns true if itemDate is before currenDate
+    public static boolean isPastDate(String itemDate, String currenDate){
+
+        int currentYear = Integer.parseInt(currenDate.substring(6, 10));
+        int currentMonth = Integer.parseInt(currenDate.substring(3, 5));
+        int currentDay = Integer.parseInt(currenDate.substring(0, 2));
+
+        int itemYear = Integer.parseInt(itemDate.substring(6, 10));
+        int itemMonth = Integer.parseInt(itemDate.substring(3, 5));
+        int itemDay = Integer.parseInt(itemDate.substring(0, 2));
+
+
+        if(itemYear >= currentYear){
+            if(itemMonth >= currentMonth){
+                if(itemDay >= currentDay){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
 }
