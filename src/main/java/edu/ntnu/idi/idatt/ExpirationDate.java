@@ -82,7 +82,6 @@ public class ExpirationDate {
                 expiredAmount += this.quantities.get(i);
             }
         }
-        System.out.println("Test 1 Amount expired: " + expiredAmount);
         return expiredAmount;
     }
 
@@ -99,15 +98,26 @@ public class ExpirationDate {
         int itemDay = Integer.parseInt(itemDate.substring(0, 2));
 
 
-        if(itemYear >= currentYear){
-            if(itemMonth >= currentMonth){
-                if(itemDay >= currentDay){
-                    return false;
+        if(itemYear <= currentYear){
+            if(itemMonth <= currentMonth){
+                if(itemDay <= currentDay){
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
+
+
+        //if(itemYear >= currentYear){
+        //    if(itemMonth >= currentMonth){
+        //        if(itemDay >= currentDay){
+        //            return false;
+        //        }
+        //    }
+        //}
+        //return true;
     }
 
 
 }
+
