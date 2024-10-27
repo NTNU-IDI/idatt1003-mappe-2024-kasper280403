@@ -100,22 +100,10 @@ public class ExpirationDate {
 
         if(itemYear <= currentYear){
             if(itemMonth <= currentMonth){
-                if(itemDay <= currentDay){
-                    return true;
-                }
+                return itemDay <= currentDay;
             }
         }
         return false;
-
-
-        //if(itemYear >= currentYear){
-        //    if(itemMonth >= currentMonth){
-        //        if(itemDay >= currentDay){
-        //            return false;
-        //        }
-        //    }
-        //}
-        //return true;
     }
 
 
