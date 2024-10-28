@@ -7,50 +7,64 @@ import java.util.ArrayList;
 
 public class Storage {
 
+    //hashmap that contains the item, under its name
     private static final HashMap<String, Item> storage = new HashMap<>();
 
+    //empty constructor, used for calling the storage hashmap
     public Storage() {}
 
+    //method used to add or remove items
     public void updateStorage(String name, Double quantity, String unit, Double price, String expiration){
+
+        //putting all names to lowercase to avoid making two items of for example "Milk" and "milk"
         name = name.toLowerCase();
         boolean NewItem =! storage.containsKey(name);
 
         if (NewItem) {
-            // Adds new item to storage
+            // runs if the item name is not already a key in the storage hashmap
+            // Adds the new item to storage
             ExpirationDate date = new ExpirationDate(name, quantity, expiration);
             storage.put(name, new Item(name, quantity, unit, price, date));
         } else {
-            // Updates existing item
+            // runs if the item already is in the hashmap
+
+            //gets the item already in storage that will be updated
             Item existingItem = storage.get(name);
 
-            // Converts quantity if necessary
+            // the unit used earlier when storing the item might not be the same
+            // so the quantity is updated in that case, along with the price
+            // if the unit is not convertible the old unit is used
             if (!existingItem.unit.equals(unit)) {
                 List<Double> convertedUnits = unitConverter(quantity, unit, existingItem.unit, price);
-                quantity = convertedUnits.getFirst();
-                price = convertedUnits.getLast();
-                //converts sum as well
+                if(!convertedUnits.equals(List.of(-1.0, -1.0))) {
+                    quantity = convertedUnits.getFirst();
+                    price = convertedUnits.getLast();
+                }
             }
+
+
+            if(quantity>0) {
+                // if the quantity is positive the item amount is increased, and the expiration date does
+                // not need any extra attention and its simply added in the ExpirationDate class
+                existingItem.expiration.update(quantity, expiration);
+            } else {
+                // if the quantity is negative or 0 the expiration date remove() will be run to remove the
+                // elements with the earliest expiration date first
+                existingItem.expiration.remove(quantity);
+            }
+
 
             // Updates quantity
             existingItem.quantity += quantity;
 
-            if(quantity>0) {
-                existingItem.expiration.update(quantity, expiration);
-            } else {
-                existingItem.expiration.remove(quantity);
-            }
 
-            // Updates price if it's different and not 0
+            // Updates price if the new price is not 0
             if (price != 0.0) {
                 existingItem.price = price;
             }
 
-
-
-
         }
     }
-
 
     private List<Double> unitConverter(Double quantity, String unitFrom, String unitTo, Double price) {
 
@@ -88,8 +102,6 @@ public class Storage {
         return -1; // Returns -1 if unit is non existent
     }
 
-
-
     public Item getItem(String key) {
         return storage.get(key.toLowerCase());
     }
@@ -125,7 +137,9 @@ public class Storage {
     public ArrayList<ArrayList<String>> storageList(){
         ArrayList<ArrayList<String>> table = new ArrayList<>();
         for(String key : storage.keySet()){
-            table.add(itemList(key));
+            if (storage.get(key).quantity != 0.0) {
+                table.add(itemList(key));
+            }
         }
 
         return table;
@@ -166,5 +180,15 @@ public class Storage {
         return expired;
     }
 
-    
+    public void deleteExpiredItems(String currentDate){
+        ArrayList<ArrayList<String>> expiredList = expiredList(currentDate);
+        for (ArrayList<String> expired : expiredList) {
+            String name = expired.get(0);
+            Double quantity = -Double.parseDouble(expired.get(1));
+            String unit = expired.get(2);
+            Double price = Double.parseDouble(expired.get(3));
+            String expiration = "00-00-0000";
+            updateStorage(name, quantity, unit, price, expiration);
+        }
+    }
 }

@@ -37,11 +37,12 @@ public class ExpirationDate {
 
     public int oldestIndex(){
 
-        String temp = this.dates.getFirst().substring(6, 10);
+        if (dates.size() == 0) return 0;
+        String temp = this.dates.get(0).substring(6, 10);
         int year = Integer.parseInt(temp);
-        temp = this.dates.getFirst().substring(3, 5);
+        temp = this.dates.get(0).substring(3, 5);
         int month = Integer.parseInt(temp);
-        temp = this.dates.getFirst().substring(0, 2);
+        temp = this.dates.get(0).substring(0, 2);
         int day = Integer.parseInt(temp);
 
         int indexOldest = 0;
@@ -84,7 +85,6 @@ public class ExpirationDate {
         }
         return expiredAmount;
     }
-
 
     //returns true if itemDate is before currenDate
     public static boolean isPastDate(String itemDate, String currenDate){

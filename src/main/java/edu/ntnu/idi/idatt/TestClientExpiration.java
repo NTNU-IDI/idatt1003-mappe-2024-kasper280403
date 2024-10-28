@@ -41,6 +41,23 @@ public class TestClientExpiration {
         System.out.println("by using the expiredList method, should be pretty simple with some parsing and using current methods");
 
 
+        System.out.println("\n\nTesting deleteExpiredItems with date 28-10.2024\n");
+
+        System.out.println("Printing out all items in storage:");
+        printTableSelection(storage.storageList());
+        System.out.println("\nPrinting out expired items in storage:");
+        printTableSelection(storage.expiredList("28-10-2024"));
+        System.out.println("\n Deleting all expired items from storage\n Printing out expired items list(should be empty:");
+        storage.deleteExpiredItems("28-10-2024");
+        printTableSelection(storage.expiredList("28-10-2024"));
+        System.out.println("\nPrinting out all items in storage:");
+        printTableSelection(storage.storageList());
+
+
+        storage.updateStorage("butter", 2.0, "kg", 50.00, "10-10-2024");
+        System.out.println("\n\n\nPrinting out all items in storage, after adding 2 kg butter:");
+        printTableSelection(storage.storageList());
+
     }
 
 
@@ -60,5 +77,13 @@ public class TestClientExpiration {
                     itemList.get(4)  // expiration
             );
         }
+    }
+
+    public boolean isValidDateFormat(String date) {
+        // Regular expression for format DD.MM.YYYY or similar with any delimiter
+        String datePattern = "^\\d{2}[-./]\\d{2}[-./]\\d{4}$";
+
+        // Check if the date matches the pattern and has length 10
+        return date != null && date.length() == 10 && date.matches(datePattern);
     }
 }
