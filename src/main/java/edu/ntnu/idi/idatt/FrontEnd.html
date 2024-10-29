@@ -9,57 +9,110 @@
 <h1>FoodWaste</h1>
 
 <div class="container">
-  <!-- Første tabell for input -->
   <table>
     <tbody>
     <tr>
       <td>Item name:</td>
-      <td><input type="text"></td>
+      <td><label>
+        <input type="text">
+      </label></td>
     </tr>
     <tr>
       <td>Quantity:</td>
-      <td><input type="number"></td>
+      <td><label>
+        <input type="number">
+      </label></td>
     </tr>
     <tr>
       <td>Unit:</td>
-      <td><input type="text"></td>
+      <td><label>
+        <input type="text">
+      </label></td>
     </tr>
     <tr>
       <td>Price:</td>
-      <td><input type="number"></td>
+      <td><label>
+        <input type="number">
+      </label></td>
     </tr>
     <tr>
       <td>Expiration date:</td>
-      <td><input type="text"></td>
+      <td><label>
+        <input type="text">
+      </label></td>
     </tr>
     <tr>
       <td></td>
-      <td><button>Registrer</button></td>
+      <td><button>Update</button></td>
     </tr>
     </tbody>
   </table>
 
-  <!-- Andre tabell for handlinger, til høyre -->
   <table class="right-table">
     <tbody>
     <tr>
-      <td><button>Show items in fridge</button></td>
+      <td><button onclick="listAllItems()" class="button-54">Show items in fridge</button></td>
     </tr>
     <tr>
-      <td><button>Show expired items in fridge</button></td>
+      <td><button onclick="listExpiredItems()" class="button-54">Show expired items in fridge</button></td>
     </tr>
     <tr>
-      <td><button>Remove expired items from fridge</button></td>
+      <td><button onclick="updateItem()" class="button-54">Update</button></td>
     </tr>
     <tr>
-      <td><input type="text" placeholder="Search..."></td>
-      <td><button>Search for item</button></td>
+      <td><label>
+        <input type="text" placeholder="Item name...">
+      </label>
+      <button onclick="searchItem()" class="button-54">Search for item</button></td>
     </tr>
     </tbody>
   </table>
 </div>
 
 </body>
+<script>
+  // Hjelpefunksjon for å sende forespørsler til backend
+  async function sendRequest(endpoint, data = {}) {
+    const response = await fetch(`http://localhost:8080/${endpoint}`, { // Oppgi riktig URL for backend-serveren
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return response.json();
+  }
+
+  // Oppdater vare i lageret
+  async function updateItem() {
+    const itemData = {
+      name: document.querySelector('input[placeholder="Item name"]').value,
+      quantity: document.querySelector('input[placeholder="Quantity"]').value,
+      unit: document.querySelector('input[placeholder="Unit"]').value,
+      price: document.querySelector('input[placeholder="Price"]').value,
+      expirationDate: document.querySelector('input[placeholder="Expiration date"]').value,
+    };
+    const result = await sendRequest('updateItem', itemData);
+    alert(result.message);
+  }
+
+  // Søk etter en vare
+  async function searchItem() {
+    const name = document.querySelector('input[placeholder="Search..."]').value;
+    const result = await sendRequest('searchItem', { name });
+    alert(result.message);
+  }
+
+  // Vis alle varer i lageret
+  async function listAllItems() {
+    const result = await sendRequest('listAllItems');
+    console.log(result.items); // Bruk denne til å vise resultatene i UI
+  }
+
+  // Vis utgåtte varer
+  async function listExpiredItems() {
+    const result = await sendRequest('listExpiredItems');
+    console.log(result.items); // Bruk denne til å vise resultatene i UI
+  }
+</script>
 </html>
 
 

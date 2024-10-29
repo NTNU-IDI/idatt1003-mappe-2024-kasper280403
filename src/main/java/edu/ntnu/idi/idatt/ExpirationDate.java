@@ -35,40 +35,24 @@ public class ExpirationDate {
         }
     }
 
-    public int oldestIndex(){
 
-        if (dates.size() == 0) return 0;
-        String temp = this.dates.get(0).substring(6, 10);
-        int year = Integer.parseInt(temp);
-        temp = this.dates.get(0).substring(3, 5);
-        int month = Integer.parseInt(temp);
-        temp = this.dates.get(0).substring(0, 2);
-        int day = Integer.parseInt(temp);
+    //returns the item with the croniologically first expiration date, will not work BC.
+    public int oldestIndex(){
 
         int indexOldest = 0;
 
         for (int index = 1; index < dates.size(); index++) {
-            temp = this.dates.get(index).substring(6, 10);
-            int yearNext = Integer.parseInt(temp);
-            temp = this.dates.get(index).substring(3, 5);
-            int monthNext = Integer.parseInt(temp);
-            temp = this.dates.get(index).substring(0, 2);
-            int dayNext = Integer.parseInt(temp);
 
-            if(year >= yearNext){
-                if(month >= monthNext){
-                    if(day >= dayNext){
-                        indexOldest += 1;
-                        year = yearNext;
-                        month = monthNext;
-                        day = dayNext;
-                    }
-                }
+            if(isPastDate(dates.get(index), dates.get(indexOldest))){
+                indexOldest = index;
             }
+
         }
 
         return indexOldest;
+
     }
+
 
 
     public String getDate(int Index){
@@ -98,8 +82,12 @@ public class ExpirationDate {
         int itemDay = Integer.parseInt(itemDate.substring(0, 2));
 
 
-        if(itemYear <= currentYear){
-            if(itemMonth <= currentMonth){
+        if (itemYear < currentYear) {
+            return true;
+        } else if (itemYear == currentYear) {
+            if (itemMonth < currentMonth) {
+                return true;
+            } else if (itemMonth == currentMonth) {
                 return itemDay <= currentDay;
             }
         }

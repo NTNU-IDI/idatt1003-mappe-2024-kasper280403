@@ -25,17 +25,17 @@ public class TerminalClient {
             String keyword = scanner.nextLine();
 
             switch (keyword.toLowerCase()) {
-                case "update" -> updateStorageInput(storage);
-                case "search" -> {
+                case "update","a","1"  -> updateStorageInput(storage);
+                case "search","b","2" -> {
                     System.out.println("Write name of product you want to find: ");
                     String name = scanner.nextLine();
                     searchItem(name, storage);
                 }
-                case "listall" -> {
+                case "listall","c","3" -> {
                     System.out.println("\nList of all items in storage: ");
                     printTableSelection(storage.storageList());
                 }
-                case "listexpired" -> {
+                case "listexpired","d","4" -> {
                     System.out.print("Write today's date (format dd-mm-yyyy): ");
                     String date = scanner.nextLine();
                     while (!isValidDateFormat(date)) {
@@ -49,7 +49,7 @@ public class TerminalClient {
                         storage.deleteExpiredItems(date);
                     }
                 }
-                case "quit" -> {
+                case "quit","e","5" -> {
                     scanner.close();
                     keepGoing = false;
                     System.out.println("Exiting program.");}
@@ -78,7 +78,7 @@ public class TerminalClient {
         System.out.print("Enter item unit (if possible use g, hg, kg/cL, dL, L): ");
         String unit = scanner.nextLine();
 
-        System.out.print("Enter item price (format: 00.00): ");
+        System.out.print("Enter item price per unit (format: 00.00): ");
         String priceInput = scanner.nextLine();
         while(!isValidDoubleFormat(priceInput)) {
             System.out.print("Enter valid price format (format: 00.00): ");
@@ -102,7 +102,7 @@ public class TerminalClient {
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isValidDateFormat(String date) {
         // Regular expression for format DD.MM.YYYY or similar with any delimiter
-        String datePattern = "^\\d{2}[-./]\\d{2}[-./]\\d{4}$";
+        String datePattern = "^\\d{2}[-./,]\\d{2}[-./,]\\d{4}$";
 
         // Check if the date matches the pattern and has length 10
         return date != null && date.length() == 10 && date.matches(datePattern);
@@ -137,6 +137,8 @@ public class TerminalClient {
             );
             sum += Double.parseDouble(itemList.get(1)) * Double.parseDouble(itemList.get(3));
         }
+
+        sum =  Math.round(sum*1000)/1000.0;
 
         System.out.printf("%-10s %-10s %-10s %-10s %-15s%n", "Sum", "", "", sum, "");
     }

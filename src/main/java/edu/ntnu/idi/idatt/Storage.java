@@ -157,7 +157,7 @@ public class Storage {
             Double price = item.price;
             sum += quantity * price;
         }
-        return sum;
+        return Math.round(sum*1000)/1000.0;
     }
 
     public ArrayList<ArrayList<String>> expiredList(String currentDate){
