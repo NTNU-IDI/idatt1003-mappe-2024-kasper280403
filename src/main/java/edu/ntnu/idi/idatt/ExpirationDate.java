@@ -36,7 +36,7 @@ public class ExpirationDate {
     }
 
 
-    //returns the item with the croniologically first expiration date, will not work BC.
+    //returns the item with the chronologically first expiration date, will not work BC.
     public int oldestIndex(){
 
         int indexOldest = 0;
