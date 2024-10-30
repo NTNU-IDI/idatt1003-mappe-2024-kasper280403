@@ -33,7 +33,7 @@ public class TerminalClient {
             switch (keyword.toLowerCase()) {
                 case "update","a","1"  -> updateStorageInput(storage);
                 case "search","b","2" -> {
-                    System.out.println("Write name of product you want to find: ");
+                    System.out.print("Write name of product you want to find: ");
                     String name = scanner.nextLine();
                     searchItem(name, storage);
                 }
@@ -80,10 +80,10 @@ public class TerminalClient {
         System.out.print("\nEnter item name (use generic names for better recipe suggestions): ");
         String name = scanner.nextLine();
 
-        System.out.print("Enter item quantity (format: 00.00): ");
+        System.out.print("Enter item quantity, negative to remove (format: -00.00): ");
         String quantityInput = scanner.nextLine();
         while(!isValidDoubleFormat(quantityInput)) {
-            System.out.print("Enter valid quantity format (format: 00.00): ");
+            System.out.print("Enter valid quantity format (format: -00.00): ");
             quantityInput = scanner.nextLine();
         }
         double quantity = Double.parseDouble(quantityInput);
@@ -123,7 +123,7 @@ public class TerminalClient {
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isValidDoubleFormat(String input) {
-        String doublePattern = "^\\d*\\.?\\d*$";
+        String doublePattern = "^-?\\d*\\.?\\d*$";
         if (input.isEmpty()){
             return false;
         }

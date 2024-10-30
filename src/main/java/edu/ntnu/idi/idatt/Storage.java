@@ -50,12 +50,16 @@ public class Storage {
             } else {
                 // if the quantity is negative or 0 the expiration date remove() will be run to remove the
                 // elements with the earliest expiration date first
-                existingItem.expiration.remove(quantity);
+                existingItem.expiration.remove(quantity, existingItem.quantity);
             }
 
 
             // Updates quantity
-            existingItem.quantity += quantity;
+            if((existingItem.quantity+quantity)<0.0){
+                existingItem.quantity = 0.0;
+            } else{
+                existingItem.quantity += quantity;
+            }
 
 
             // Updates price if the new price is not 0

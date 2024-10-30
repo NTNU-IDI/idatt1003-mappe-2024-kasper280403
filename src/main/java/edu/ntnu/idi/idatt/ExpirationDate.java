@@ -20,7 +20,10 @@ public class ExpirationDate {
         this.dates.add(expiration);
     }
 
-    public void remove(Double quantity){
+    public void remove(Double quantity, Double totalQuantity){
+        if(-quantity>totalQuantity){
+            quantity = -totalQuantity;
+        }
         double remainingQuantity = -quantity;
         while(remainingQuantity > 0.0) {
             int index = oldestIndex();
