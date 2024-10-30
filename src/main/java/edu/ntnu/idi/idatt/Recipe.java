@@ -125,6 +125,7 @@ public class Recipe {
             Double quantity = -amountsList.get(i);
             String unit = unitList.get(i);
             storage.updateStorage(ingredient, quantity, unit, 0.0, "00-00-0000");
+            System.out.println("Updatet");
         }
     }
 }

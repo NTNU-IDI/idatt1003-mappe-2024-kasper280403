@@ -45,7 +45,7 @@ public class Storage {
 
             if(quantity>0) {
                 // if the quantity is positive the item amount is increased, and the expiration date does
-                // not need any extra attention and its simply added in the ExpirationDate class
+                // not need any extra attention, and it is simply added in the ExpirationDate class
                 existingItem.expiration.update(quantity, expiration);
             } else {
                 // if the quantity is negative or 0 the expiration date remove() will be run to remove the
