@@ -9,7 +9,9 @@ public class RecipeBook {
     public RecipeBook() {}
 
     public void addRecipe(String recipeName, String recipeDescription, ArrayList<String> ingredients, ArrayList<Double> amounts, ArrayList<String> unit) {
-        recipeBook.put(recipeName, new Recipe(recipeName, recipeDescription, ingredients, amounts, unit));
+        String key = recipeName.toLowerCase();
+        key = key.replaceAll(" ", "");
+        recipeBook.put(key, new Recipe(recipeName, recipeDescription, ingredients, amounts, unit));
     }
 
     public ArrayList<String> makeAbleList(Storage storage) {
@@ -23,10 +25,22 @@ public class RecipeBook {
     }
 
     public ArrayList<String> getRecipeNames() {
+        ArrayList<String> recipeNames = new ArrayList<>();
+        for(String key: recipeBook.keySet()){
+            Recipe recipe = recipeBook.get(key);
+            recipeNames.add(recipe.recipeName);
+        }
+
+        return recipeNames;
+    }
+
+    public ArrayList<String> getRecipeKeys() {
         return new ArrayList<>(recipeBook.keySet());
     }
 
-    public Recipe getRecipe(String recipeName) {
-        return recipeBook.get(recipeName);
+
+
+    public Recipe getRecipe(String recipeKey) {
+        return recipeBook.get(recipeKey);
     }
 }

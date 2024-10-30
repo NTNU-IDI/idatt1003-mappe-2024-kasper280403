@@ -24,7 +24,7 @@ public class TerminalClient {
                 B) Search for an item (search)                      G) Get recipe names (recipeNames)
                 C) Print out list of all items (listAll)            H) Get recipes that are able to be made
                 D) Print out expired items (listExpired)               with the current items in storage (makeAble)
-                E) Quit (quit)                                      K) Make recipe (make)
+                E) Quit (quit)                                      I) Get recipe instructions and ingredient list (make)
             Please enter your choice:\s""";
 
             System.out.print(menu);
@@ -66,7 +66,7 @@ public class TerminalClient {
 
                 case "makeable","h","8" -> getMakeAbleRecipes(recipeBook, storage);
 
-
+                case "make", "i", "9" -> makeRecipe(recipeBook, storage);
 
                 default -> System.out.println("Invalid choice, please try again.");
             }
@@ -184,7 +184,7 @@ public class TerminalClient {
         System.out.print("Enter description: ");
         String description = scanner.nextLine();
 
-        int i = 0;
+        int i = 1;
         String input;
         String pattern = "^(\\w+)[-./,]\\s*(\\d*\\.?\\d*)[-./,]\\s*(\\w+)$";
         Pattern regex = Pattern.compile(pattern);
@@ -197,13 +197,13 @@ public class TerminalClient {
             System.out.print("Ingredient "+i+": ");
             input = scanner.nextLine();
             Matcher matcher = regex.matcher(input);
-            if(matcher.matches() || !input.isEmpty()){
+            if(matcher.matches() && !input.isEmpty()){
                 i++;
                 ingredients.add(matcher.group(1));
                 amounts.add(Double.parseDouble(matcher.group(2)));
                 units.add(matcher.group(3));
 
-            } else {
+            } else if(!matcher.matches() && !input.isEmpty()){
                 System.out.println("Invalid format!");
             }
 
@@ -224,10 +224,10 @@ public class TerminalClient {
 
     public static void getRecipeNames(RecipeBook recipeBook, Storage storage) {
         System.out.println("\n--The recipe book contains these recipes:");
-        ArrayList<String> recipeNames = recipeBook.getRecipeNames();
-        for (String recipeName : recipeNames) {
-            System.out.print(recipeName);
-            if(recipeBook.getRecipe(recipeName).isMakeAble(false, storage)) {
+        ArrayList<String> recipeKeys = recipeBook.getRecipeKeys();
+        for (String key : recipeKeys) {
+            System.out.print(recipeBook.getRecipe(key).recipeName);
+            if(recipeBook.getRecipe(key).isMakeAble(false, storage)) {
                 System.out.print(" (required ingredients is in storage)");
             }
             System.out.println();
@@ -236,25 +236,28 @@ public class TerminalClient {
 
     public static void makeRecipe(RecipeBook recipeBook, Storage storage) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter recipe name: ");
-        ArrayList<String> names = recipeBook.getRecipeNames();
+        System.out.print("Enter recipe name: ");
+        ArrayList<String> names = recipeBook.getRecipeKeys();
         String name = scanner.nextLine().toLowerCase();
+        name = name.replace(" ", "");
         while(!names.contains(name)){
             System.out.println("Recipe not found, enter valid recipe name: ");
             name = scanner.nextLine().toLowerCase();
         }
         Recipe recipe = recipeBook.getRecipe(name);
-        if(!recipe.isMakeAble(false, storage)) {
+        System.out.println("\n--"+recipe.recipeName);
+        recipe.ingredientList();
+        System.out.println("\nInstructions:\n"+recipe.recipeDescription);
+        if(!recipe.isMakeAble(true, storage)) {
             System.out.println("Cannot make recipe");
+            return;
         }
 
-        System.out.println("Recipe can be made!");
+        System.out.println("Storage contains the required ingredients to make recipe!");
 
-        recipe.ingredientList();
 
-        System.out.println("\nInstructions:\n"+recipe.recipeDescription);
 
-        System.out.println("\nDo you want to remove the items from storage (yes/no)");
+        System.out.print("\nDo you want to remove the ingredients from storage (yes/no): ");
         String input = scanner.nextLine();
         if(input.equalsIgnoreCase("yes")){
             //remove the items from storage
@@ -262,9 +265,6 @@ public class TerminalClient {
 
 
     }
-
-
-
 
 
 }

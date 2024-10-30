@@ -113,7 +113,7 @@ public class Recipe {
 
     public void ingredientList(){
 
-        System.out.print("Ingredient list: ");
+        System.out.println("Ingredient list:");
         for (int i = 0; i < ingredientsList.size(); i++) {
             System.out.println(ingredientsList.get(i) + ": " + amountsList.get(i) + " " + unitList.get(i));
         }
