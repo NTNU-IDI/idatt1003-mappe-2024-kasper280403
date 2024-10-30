@@ -38,9 +38,14 @@ public class RecipeBook {
         return new ArrayList<>(recipeBook.keySet());
     }
 
-
-
     public Recipe getRecipe(String recipeKey) {
         return recipeBook.get(recipeKey);
     }
+
+    public void deleteFromStorage(Storage storage, String recipeKey) {
+        Recipe recipe = recipeBook.get(recipeKey);
+        recipe.deleteFromStorage(storage);
+    }
+
+
 }

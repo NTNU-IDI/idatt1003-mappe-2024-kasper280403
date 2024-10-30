@@ -118,4 +118,13 @@ public class Recipe {
             System.out.println(ingredientsList.get(i) + ": " + amountsList.get(i) + " " + unitList.get(i));
         }
     }
+
+    public void deleteFromStorage(Storage storage) {
+        for (int i = 0; i < this.ingredientsList.size(); i++) {
+            String ingredient = ingredientsList.get(i);
+            Double quantity = -amountsList.get(i);
+            String unit = unitList.get(i);
+            storage.updateStorage(ingredient, quantity, unit, 0.0, "00-00-0000");
+        }
+    }
 }

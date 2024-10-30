@@ -260,7 +260,8 @@ public class TerminalClient {
         System.out.print("\nDo you want to remove the ingredients from storage (yes/no): ");
         String input = scanner.nextLine();
         if(input.equalsIgnoreCase("yes")){
-            //remove the items from storage
+            recipe.deleteFromStorage(storage);
+            System.out.println("Ingredients removed successfully.");
         }
 
 
