@@ -1,5 +1,7 @@
 package edu.ntnu.idi.idatt;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -131,6 +133,14 @@ public class TerminalClient {
     }
 
     public static void printTableSelection(ArrayList<ArrayList<String>> list){
+
+        //sorts items by name
+        Collections.sort(list, new Comparator<ArrayList<String>>() {
+            @Override
+            public int compare(ArrayList<String> o1, ArrayList<String> o2) {
+                return o1.get(0).compareTo(o2.get(0));
+            }
+        });
 
 
         // prints out heading

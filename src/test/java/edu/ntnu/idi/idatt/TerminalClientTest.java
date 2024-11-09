@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TerminalClientTest {
     Storage storage = new Storage();
+
     @Test
     void testingUpdateStorage() {
         String name = "milk";
