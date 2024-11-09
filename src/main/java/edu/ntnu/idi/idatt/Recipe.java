@@ -74,9 +74,6 @@ public class Recipe {
         return amountsList.get(index)-item.getQuantity();
     }
 
-
-    //function that makes it possible to edit the recipes
-
     private Double unitConverter(Double quantity, String unitFrom, String unitTo) {
 
         List<String> volume = List.of("mL", "cL", "dL", "L", "daL", "hL", "kL");

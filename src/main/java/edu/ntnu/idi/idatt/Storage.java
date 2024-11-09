@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 
 public class Storage {
-
     //hashmap that contains the item, under its name
     private static final HashMap<String, Item> storage = new HashMap<>();
 

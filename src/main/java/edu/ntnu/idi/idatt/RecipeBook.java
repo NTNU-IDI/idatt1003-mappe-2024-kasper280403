@@ -42,10 +42,4 @@ public class RecipeBook {
         return recipeBook.get(recipeKey);
     }
 
-    public void deleteFromStorage(Storage storage, String recipeKey) {
-        Recipe recipe = recipeBook.get(recipeKey);
-        recipe.deleteFromStorage(storage);
-    }
-
-
 }
