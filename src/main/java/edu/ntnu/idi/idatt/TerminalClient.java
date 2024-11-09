@@ -142,7 +142,6 @@ public class TerminalClient {
             }
         });
 
-
         // prints out heading
         System.out.printf("%-10s %-10s %-10s %-10s %-15s%n", "Item", "Quantity", "Unit", "Price", "Expiration");
         System.out.println("--------------------------------------------------------------");

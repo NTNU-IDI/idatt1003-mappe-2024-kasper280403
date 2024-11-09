@@ -152,17 +152,6 @@ public class Storage {
         return storage.containsKey(key);
     }
 
-    public double sumOfStorage(){
-        double sum = 0.0;
-        for(String key : storage.keySet()){
-            Item item = storage.get(key);
-            Double quantity = item.quantity;
-            Double price = item.price;
-            sum += quantity * price;
-        }
-        return Math.round(sum*1000)/1000.0;
-    }
-
     public ArrayList<ArrayList<String>> expiredList(String currentDate){
         ArrayList<Item> expiredItem = new ArrayList<>();
         ArrayList<Double> quantity = new ArrayList<>();

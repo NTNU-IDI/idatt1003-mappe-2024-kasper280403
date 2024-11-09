@@ -35,7 +35,7 @@ public class Recipe {
 
     //make function that checks if the required ingredients are in the storage, returns a list of the missing items
     public ArrayList<ArrayList<String>> missingList(Storage storage){
-        ArrayList<ArrayList<String>> missingList = new ArrayList<>();;
+        ArrayList<ArrayList<String>> missingList = new ArrayList<>();
         for (int i = 0; i < ingredientsList.size(); i++) {
             if(isInStorage(i, storage) > 0.0){
                 ArrayList<String> temporary = new ArrayList<>();
@@ -122,7 +122,7 @@ public class Recipe {
             Double quantity = -amountsList.get(i);
             String unit = unitList.get(i);
             storage.updateStorage(ingredient, quantity, unit, 0.0, "00-00-0000");
-            System.out.println("Updatet");
+            System.out.println("Updated");
         }
     }
 }
