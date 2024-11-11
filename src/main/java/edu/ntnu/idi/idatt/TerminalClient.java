@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -93,7 +92,7 @@ public class TerminalClient {
         System.out.print("Enter item unit (if possible use g, hg, kg/cL, dL, L): ");
         String unit = scanner.nextLine();
 
-        if(quantity < 0){
+        if(quantity < 0.0){
             storage.updateStorage(name, quantity, unit, 0.0, "00-00-0000");
             System.out.println("Item was removed successfully.");
             return;
@@ -106,6 +105,12 @@ public class TerminalClient {
             priceInput = scanner.nextLine();
         }
         double price = Double.parseDouble(priceInput);
+
+        if(quantity == 0.0){
+            storage.updateStorage(name, quantity, unit, price, "00-00-0000");
+            System.out.println("Item was updated successfully.");
+            return;
+        }
 
 
         System.out.print("Enter item expiration date (format: dd/mm/yyyy): ");
@@ -141,12 +146,7 @@ public class TerminalClient {
     public static void printTableSelection(ArrayList<ArrayList<String>> list){
 
         //sorts items by name
-        Collections.sort(list, new Comparator<ArrayList<String>>() {
-            @Override
-            public int compare(ArrayList<String> o1, ArrayList<String> o2) {
-                return o1.get(0).compareTo(o2.get(0));
-            }
-        });
+        list.sort(Comparator.comparing(ArrayList::getFirst));
 
         // prints out heading
         System.out.printf("%-10s %-10s %-10s %-10s %-15s%n", "Item", "Quantity", "Unit", "Price", "Expiration");
