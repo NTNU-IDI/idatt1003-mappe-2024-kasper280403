@@ -82,10 +82,10 @@ public class TerminalClient {
         System.out.print("\nEnter item name (use generic names for better recipe suggestions): ");
         String name = scanner.nextLine();
 
-        System.out.print("Enter item quantity, negative to remove (format: -00.00): ");
+        System.out.print("Enter item quantity, negative to remove (format: (-)00.00): ");
         String quantityInput = scanner.nextLine();
         while(!isValidDoubleFormat(quantityInput)) {
-            System.out.print("Enter valid quantity format (format: -00.00): ");
+            System.out.print("Enter valid quantity format (format: (-)00.00): ");
             quantityInput = scanner.nextLine();
         }
         double quantity = Double.parseDouble(quantityInput);
@@ -93,7 +93,13 @@ public class TerminalClient {
         System.out.print("Enter item unit (if possible use g, hg, kg/cL, dL, L): ");
         String unit = scanner.nextLine();
 
-        System.out.print("Enter item price per unit (format: 00.00): ");
+        if(quantity < 0){
+            storage.updateStorage(name, quantity, unit, 0.0, "00-00-0000");
+            System.out.println("Item was removed successfully.");
+            return;
+        }
+
+        System.out.print("Enter item price per unit, to keep current price write 0 (format: 00.00): ");
         String priceInput = scanner.nextLine();
         while(!isValidDoubleFormat(priceInput)) {
             System.out.print("Enter valid price format (format: 00.00): ");
@@ -110,7 +116,7 @@ public class TerminalClient {
         }
 
         storage.updateStorage(name, quantity, unit, price, expiration);
-        System.out.println("Item was updated successfully.");
+        System.out.println("Item was added successfully.");
 
     }
 
