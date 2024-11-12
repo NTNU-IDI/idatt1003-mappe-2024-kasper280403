@@ -25,15 +25,14 @@ STUDENT ID = "Your ID"
 
 [//]: # (TODO: Describe how to run your project here. What is the main class? What is the main method?
 What is the input and output of the program? What is the expected behaviour of the program?)
-Currently the program only has a testClient this file runs the current functions of the program 
-and is used to test that everything works.
-A real user interface will be implemented when all the necessary functions hav been made,
+To run the project open the TerminalClient program and run it in terminal. To run the program with pre made
+data make sure line 14 in TerminalClient is not commented.
 
 
 ## How to run the tests
 
 [//]: # (TODO: Describe how to run the tests here.)
-For now only thing to do is run the testClient
+Go to TerminalClientTest and run the program, shoudl compile with 0 errors.
 
 ## References
 
