@@ -38,7 +38,6 @@ public class ExpirationDate {
         }
     }
 
-
     //returns the item with the chronologically first expiration date, will not work BC.
     public int oldestIndex(){
 
@@ -55,8 +54,6 @@ public class ExpirationDate {
         return indexOldest;
 
     }
-
-
 
     public String getDate(int Index){
         return this.dates.get(Index);
