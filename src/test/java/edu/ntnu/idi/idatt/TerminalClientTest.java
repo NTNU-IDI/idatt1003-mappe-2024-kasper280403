@@ -56,4 +56,18 @@ public class TerminalClientTest {
         assertEquals(true, exist2);
     }
 
+    @Test
+    void testingListAll(){
+        ArrayList<ArrayList<String>> list = storage.storageList();
+
+        assertEquals(list.get(1).getFirst(), "milk");
+        assertEquals(list.get(0).get(0), "ham");
+        assertEquals(list.get(0).get(3), "21.9");
+        assertEquals(list.get(1).get(1), "12.0");
+        assertEquals(list.get(1).get(2), "dL");
+
+    }
+
+
+
 }
