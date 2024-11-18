@@ -77,7 +77,7 @@ public class PreMadeData {
 
         recipeBook.addRecipe(
                 "Spaghetti Bologna",
-                "Cook the beef(not in water), norwegian word 'stek' do that. Then add the rest and like boil.",
+                "Cook the beef(not in water, but sear). Then add the rest and like boil.",
                 new ArrayList<>(Arrays.asList("pasta", "ground beef", "tomato", "onion", "garlic")),
                 new ArrayList<>(Arrays.asList(0.2, 0.3, 2.0, 0.1, 0.02)),
                 new ArrayList<>(Arrays.asList("kg", "kg", "stk", "kg", "kg"))

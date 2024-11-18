@@ -3,6 +3,11 @@ package edu.ntnu.idi.idatt;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents a Recipe.
+ * It contains details about the recipe name, description, ingredients,
+ * their quantities, and units of measurement.
+ */
 public class Recipe {
     String recipeName;
     String recipeDescription;
@@ -10,6 +15,15 @@ public class Recipe {
     ArrayList<Double> amountsList;
     ArrayList<String> unitList;
 
+    /**
+     * Constructs a new Recipe object.
+     *
+     * @param recipeName the name of the recipe.
+     * @param recipeDescription a short description of the recipe.
+     * @param ingredients the list of ingredients needed for the recipe.
+     * @param amounts the corresponding quantities of each ingredient.
+     * @param unit the units of measurement for the ingredients.
+     */
     public Recipe(String recipeName, String recipeDescription, ArrayList<String> ingredients, ArrayList<Double> amounts, ArrayList<String> unit) {
         this.recipeName = recipeName;
         this.recipeDescription = recipeDescription;
@@ -18,7 +32,13 @@ public class Recipe {
         this.unitList = unit;
     }
 
-    //returns true if all the ingredients are in storage, takes a boolean if true it will print out a list of missing items
+    /**
+     * Checks if the recipe can be made with the current storage.
+     *
+     * @param printMissing if true, prints the missing ingredients.
+     * @param storage the storage object to check ingredient availability.
+     * @return true if all ingredients are available in sufficient quantity, false otherwise.
+     */
     public boolean isMakeAble(boolean printMissing, Storage storage) {
         ArrayList<ArrayList<String>> missingList = missingList(storage);
         if(missingList.isEmpty()) {
@@ -48,7 +68,13 @@ public class Recipe {
         return missingList;
     }
 
-    //return 0.0 if item is in storage with the required amount, returns the missing amount
+    /**
+     * Checks if a specific ingredient is available in the storage with the required amount.
+     *
+     * @param index the index of the ingredient in the recipe's ingredient list.
+     * @param storage the storage object to check ingredient availability.
+     * @return 0.0 if the ingredient is available in sufficient quantity, otherwise the missing amount.
+     */
     public Double isInStorage(int index, Storage storage) {
         String key = ingredientsList.get(index);
         Item item = storage.getItem(key);
@@ -74,6 +100,14 @@ public class Recipe {
         return amountsList.get(index)-item.getQuantity();
     }
 
+    /**
+     * Converts the quantity of an ingredient from one unit to another.
+     *
+     * @param quantity the quantity to convert.
+     * @param unitFrom the unit of the given quantity.
+     * @param unitTo the target unit for conversion.
+     * @return the converted quantity if conversion is possible, or -1.0 if the units are incompatible.
+     */
     private Double unitConverter(Double quantity, String unitFrom, String unitTo) {
 
         List<String> volume = List.of("mL", "cL", "dL", "L", "daL", "hL", "kL");
@@ -99,6 +133,14 @@ public class Recipe {
         return -1.0;
     }
 
+    /**
+     * Finds the index of a unit in a predefined list of volume or weight units.
+     *
+     * @param unit the unit to find.
+     * @param volume a list of volume units.
+     * @param weight a list of weight units.
+     * @return the index of the unit in the corresponding list, or -1 if not found.
+     */
     private int findUnitIndex(String unit, List<String> volume, List<String> weight) {
         if (volume.contains(unit)) {
             return volume.indexOf(unit); // 0 to 6 for volume
@@ -108,6 +150,9 @@ public class Recipe {
         return -1; // Returns -1 if unit is non existent
     }
 
+    /**
+     * Prints the list of ingredients required for the recipe along with their quantities and units.
+     */
     public void ingredientList(){
 
         System.out.println("Ingredient list:");
@@ -116,6 +161,11 @@ public class Recipe {
         }
     }
 
+    /**
+     * Removes the required quantities of each ingredient in the recipe from the storage.
+     *
+     * @param storage the storage object from which ingredients will be deducted.
+     */
     public void deleteFromStorage(Storage storage) {
         for (int i = 0; i < this.ingredientsList.size(); i++) {
             String ingredient = ingredientsList.get(i);

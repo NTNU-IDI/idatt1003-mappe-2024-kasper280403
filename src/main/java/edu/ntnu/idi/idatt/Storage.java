@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 
+/**
+ * Storage class that manages items in a storage with functionality to update, retrieve,
+ * convert, and organize items based on various parameters like names, quantities, units, prices,
+ * and expiration dates.
+ */
 public class Storage {
     //hashmap that contains the item, under its name
     private static final HashMap<String, Item> storage = new HashMap<>();
@@ -12,7 +17,15 @@ public class Storage {
     //empty constructor, used for calling the storage hashmap
     public Storage() {}
 
-    //method used to add or remove items
+    /**
+     * Updates the storage with the specified item's details.
+     *
+     * @param name The name of the item
+     * @param quantity The quantity of the item
+     * @param unit The unit of measurement for the item
+     * @param price The price of the item
+     * @param expiration The expiration date of the item
+     */
     public void updateStorage(String name, Double quantity, String unit, Double price, String expiration){
 
         //putting all names to lowercase to avoid making two items of for example "Milk" and "milk"
@@ -69,6 +82,15 @@ public class Storage {
         }
     }
 
+    /**
+     * Converts the unit of the given quantity and price.
+     *
+     * @param quantity The quantity to be converted
+     * @param unitFrom The unit to convert from
+     * @param unitTo The unit to convert to
+     * @param price The price associated with the quantity
+     * @return A List containing converted values
+     */
     private List<Double> unitConverter(Double quantity, String unitFrom, String unitTo, Double price) {
 
         List<String> volume = List.of("mL", "cL", "dL", "L", "daL", "hL", "kL");
@@ -96,6 +118,14 @@ public class Storage {
         return List.of(-1.0, -1.0);
     }
 
+    /**
+     * Finds the index of the unit in the given lists.
+     *
+     * @param unit The unit to find
+     * @param volume The list of volume units
+     * @param weight The list of weight units
+     * @return The index of the unit
+     */
     private int findUnitIndex(String unit, List<String> volume, List<String> weight) {
         if (volume.contains(unit)) {
             return volume.indexOf(unit); // 0 to 6 for volume
@@ -105,10 +135,22 @@ public class Storage {
         return -1; // Returns -1 if unit is non existent
     }
 
+    /**
+     * Retrieves an item from the storage.
+     *
+     * @param key The key name of the item
+     * @return The item corresponding to the key
+     */
     public Item getItem(String key) {
         return storage.get(key.toLowerCase());
     }
 
+    /**
+     * Retrieves a list of item names.
+     *
+     * @param key The key to look up items
+     * @return An ArrayList of item names
+     */
     public ArrayList<String> itemList(String key){
         ArrayList<String> v = new ArrayList<>();
 
@@ -123,6 +165,13 @@ public class Storage {
         return v;
     }
 
+    /**
+     * Retrieves a list of expired items.
+     *
+     * @param key The key to look up items
+     * @param amount The amount to check expiry against
+     * @return An ArrayList of expired items
+     */
     public ArrayList<String> itemListExpired(String key, Double amount){
         ArrayList<String> v = new ArrayList<>();
 
@@ -137,6 +186,11 @@ public class Storage {
         return v;
     }
 
+    /**
+     * Retrieves the entire list of items in storage.
+     *
+     * @return An ArrayList of ArrayLists containing storage information
+     */
     public ArrayList<ArrayList<String>> storageList(){
         ArrayList<ArrayList<String>> table = new ArrayList<>();
         for(String key : storage.keySet()){
@@ -148,10 +202,22 @@ public class Storage {
         return table;
     }
 
+    /**
+     * Checks if an item exists in the storage.
+     *
+     * @param key The key name of the item
+     * @return true if the item exists, otherwise false
+     */
     public boolean itemExists(String key){
         return storage.containsKey(key);
     }
 
+    /**
+     * Retrieves a list of expired items based on the current date.
+     *
+     * @param currentDate The current date to check expiry against
+     * @return An ArrayList of ArrayLists containing expired items
+     */
     public ArrayList<ArrayList<String>> expiredList(String currentDate){
         ArrayList<Item> expiredItem = new ArrayList<>();
         ArrayList<Double> quantity = new ArrayList<>();
@@ -172,6 +238,11 @@ public class Storage {
         return expired;
     }
 
+    /**
+     * Deletes expired items based on the current date.
+     *
+     * @param currentDate The current date to check expiry against
+     */
     public void deleteExpiredItems(String currentDate){
         ArrayList<ArrayList<String>> expiredList = expiredList(currentDate);
         for (ArrayList<String> expired : expiredList) {
