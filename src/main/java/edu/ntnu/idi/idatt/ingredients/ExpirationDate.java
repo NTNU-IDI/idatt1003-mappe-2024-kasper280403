@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.ingredients;
 
 import java.util.ArrayList;
 
@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class ExpirationDate {
     String name;
-    ArrayList<Double> quantities = new ArrayList<>();
-    ArrayList<String> dates = new ArrayList<>();
+    public ArrayList<Double> quantities = new ArrayList<>();
+    public ArrayList<String> dates = new ArrayList<>();
 
     /**
      * Constructs an ExpirationDate object with an initial quantity and expiration date.

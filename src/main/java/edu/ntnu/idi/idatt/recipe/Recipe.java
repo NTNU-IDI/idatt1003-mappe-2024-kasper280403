@@ -1,4 +1,7 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.recipe;
+
+import edu.ntnu.idi.idatt.ingredients.Item;
+import edu.ntnu.idi.idatt.ingredients.Storage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +12,8 @@ import java.util.List;
  * their quantities, and units of measurement.
  */
 public class Recipe {
-    String recipeName;
-    String recipeDescription;
+    public String recipeName;
+    public String recipeDescription;
     ArrayList<String> ingredientsList;
     ArrayList<Double> amountsList;
     ArrayList<String> unitList;
@@ -154,8 +157,7 @@ public class Recipe {
      * Prints the list of ingredients required for the recipe along with their quantities and units.
      */
     public void ingredientList(){
-
-        System.out.println("Ingredient list:");
+         System.out.println("Ingredient list:");
         for (int i = 0; i < ingredientsList.size(); i++) {
             System.out.println(ingredientsList.get(i) + ": " + amountsList.get(i) + " " + unitList.get(i));
         }

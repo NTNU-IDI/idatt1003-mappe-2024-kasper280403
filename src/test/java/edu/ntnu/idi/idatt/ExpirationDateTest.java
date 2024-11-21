@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.ingredients.ExpirationDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +31,7 @@ public class ExpirationDateTest {
 
     @Test
     void testRemove() {
-        expirationDate.remove(5.0, 10.0);
+        expirationDate.remove(-5.0, 10.0);
         // Verify that 5 units were removed, remaining should be 5
         assertEquals(5.0, expirationDate.quantities.getFirst());
     }

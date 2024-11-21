@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.ingredients;
 
 /**
  * The Item class represents an item with a name, quantity, unit, price, and expiration date.
@@ -20,12 +20,22 @@ public class Item {
      * @param expiration the expiration date of the item
      */
     public Item(String name, Double quantity, String unit, Double price, ExpirationDate expiration) {
+        itemConstructorValidtor(name, quantity);
         this.name = name.toLowerCase();
         this.quantity = quantity;
         this.unit = unit;
         this.price = price;
         this.expiration = expiration;
     }
+
+    private static void itemConstructorValidtor(String name, Double quantity) {
+        if(name.contains(" ") || name.contains("-")){
+            throw new IllegalArgumentException("Name must be name");
+        }
+        if (quantity <= 0.0) {
+            throw new IllegalArgumentException();
+        }
+    } //Put in argument validator class
 
     /**
      * Gets the name of the item.

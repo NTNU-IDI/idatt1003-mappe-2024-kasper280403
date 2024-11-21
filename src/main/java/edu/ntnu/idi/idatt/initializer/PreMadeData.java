@@ -1,4 +1,8 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.initializer;
+
+import edu.ntnu.idi.idatt.ingredients.Storage;
+import edu.ntnu.idi.idatt.recipe.RecipeBook;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 

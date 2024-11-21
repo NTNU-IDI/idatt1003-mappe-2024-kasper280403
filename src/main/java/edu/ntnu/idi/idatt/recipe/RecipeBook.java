@@ -1,4 +1,6 @@
-package edu.ntnu.idi.idatt;
+package edu.ntnu.idi.idatt.recipe;
+
+import edu.ntnu.idi.idatt.ingredients.Storage;
 
 import java.util.ArrayList;
 import java.util.HashMap;

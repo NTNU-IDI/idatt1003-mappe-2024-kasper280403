@@ -1,5 +1,7 @@
 package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.ingredients.Item;
+import edu.ntnu.idi.idatt.ingredients.Storage;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
