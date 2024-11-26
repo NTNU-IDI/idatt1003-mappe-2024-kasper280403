@@ -11,7 +11,6 @@ public class ExpirationDate {
     String name;
     public ArrayList<Double> quantities = new ArrayList<>();
     public ArrayList<String> dates = new ArrayList<>();
-
     /**
      * Constructs an ExpirationDate object with an initial quantity and expiration date.
      *
