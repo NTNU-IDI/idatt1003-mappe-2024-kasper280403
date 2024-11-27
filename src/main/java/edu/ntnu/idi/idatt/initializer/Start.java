@@ -55,7 +55,7 @@ public class Start {
                         storage.deleteExpiredItems(date);
                     }
                 }
-                case "quit","e","5" -> {
+                case "quit","e","5", "q" -> {
                     scanner.close();
                     keepGoing = false;
                     System.out.println("Exiting program.");
