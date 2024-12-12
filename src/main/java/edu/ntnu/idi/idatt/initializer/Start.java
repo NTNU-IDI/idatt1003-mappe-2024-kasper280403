@@ -22,9 +22,9 @@ public class Start {
             \nDo you want to:
                 A) Add or remove an item (update)                   F) Add recipe (newRecipe)
                 B) Search for an item (search)                      G) Get recipe names (recipeNames)
-                C) Print out list of all items (listAll)            H) Get recipes that are able to be made
-                D) Print out expired items (listExpired)               with the current items in storage (makeAble)
-                E) Quit (quit)                                      I) Get recipe instructions and ingredient list (make)
+                C) Print out list of all items (listAll)            H) Get recipes that can be made with
+                D) Print out expired items (listExpired)               the current items in storage (makeAble)
+                E) Quit (quit)                                      I) Get recipe instruction and ingredient list (make)
             Please enter your choice:\s""";
 
             System.out.print(menu);
