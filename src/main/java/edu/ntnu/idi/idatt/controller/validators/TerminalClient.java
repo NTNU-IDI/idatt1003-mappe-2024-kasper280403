@@ -201,6 +201,7 @@ public class TerminalClient {
         while(!names.contains(name)){
             System.out.println("Recipe not found, enter valid recipe name: ");
             name = scanner.nextLine().toLowerCase();
+            name = name.replace(" ", "");
         }
         Recipe recipe = recipeBook.getRecipe(name);
         System.out.println("\n--"+recipe.recipeName);
